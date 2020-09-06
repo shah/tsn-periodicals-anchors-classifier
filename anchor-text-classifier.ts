@@ -1,5 +1,5 @@
-import * as m from "../flex-match";
-import * as cc from "../content-classifier";
+import * as m from "./flex-match";
+import * as cc from "./content-classifier";
 
 export interface ClassifiableAnchorText extends cc.ClassifiableText {
 }

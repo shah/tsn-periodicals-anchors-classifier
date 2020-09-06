@@ -4,6 +4,8 @@ import { Expect, SetupFixture, Test, TestCase, TestFixture } from "alsatian";
 import * as fs from "fs";
 import * as path from "path";
 import mime from "whatwg-mimetype";
+import * as atc from "./anchor-text-classifier";
+import * as atcRulesCommon from "./anchor-text-classifier-rules-common";
 import * as pac from "./periodicals-anchors-classifier";
 
 export interface EmailSupplierContent {
@@ -32,7 +34,9 @@ export class EmailTestSuite {
     readonly destPath = "email-supplier-test-results";
     readonly contentTr: qc.ContentTransformer = p.pipe(qc.EnrichQueryableHtmlContent.singleton);
     readonly testEmails: EmailSupplierContent[] = require("./email-supplier-test-content.json");
-    readonly supplier = new pac.TypicalPeriodicalSupplier("email://test");
+    readonly atcRulesEngine = new atc.TypicalAnchorTextRuleEngine(atcRulesCommon.commonRules);
+    readonly atcClassifier = atc.TypicalAnchorTextClassifier.singleton;
+    readonly supplier = new pac.TypicalPeriodicalSupplier("email://test", this.atcRulesEngine, this.atcClassifier);
     readonly stats = {
         editionsEncountered: 0,
         periodicalsEncountered: 0,

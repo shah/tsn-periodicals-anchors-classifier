@@ -2,7 +2,7 @@ import * as p from "@shah/ts-pipe";
 import * as fs from "fs";
 import * as path from "path";
 import { v5 as uuid } from "uuid";
-import * as atc from "./anchor-text-rules/mod";
+import * as atc from "./anchor-text-classifier";
 import * as cc from "./content-classifier";
 import * as fm from "./flex-match";
 
@@ -89,14 +89,16 @@ export interface PeriodicalEdition {
 export class TypicalPeriodicalSupplier implements PeriodicalSupplier {
     readonly periodicals: { [name: string]: Periodical } = {};
 
-    constructor(readonly name: string) {
-
+    constructor(
+        readonly name: string,
+        readonly atcRulesEngine: atc.AnchorTextRuleEngine,
+        readonly atcClassifier: atc.AnchorTextClassifier) {
     }
 
     registerPeriodical(periodicalName: string): Periodical {
         let result = this.periodicals[periodicalName];
         if (!result) {
-            result = new TypicalPeriodical(periodicalName);
+            result = new TypicalPeriodical(periodicalName, this.atcRulesEngine, this.atcClassifier);
             this.periodicals[periodicalName] = result;
         }
         return result;
@@ -110,14 +112,14 @@ export class TypicalPeriodicalSupplier implements PeriodicalSupplier {
 }
 
 export class TypicalPeriodical implements Periodical {
-    readonly atcRuleEngine = atc.healthSciTech.HealthScienceTechAnchorTextRuleEngine.singleton;
-    readonly atcClassifier = atc.TypicalAnchorTextClassifier.singleton;
     readonly editions: PeriodicalEdition[] = [];
     protected readonly unclassifiedAnchors: { [anchorText: string]: PeriodicalAnchor } = {};
     readonly classifiedAnchors: { [anchorText: string]: ClassifiedPeriodicalAnchor } = {};
     readonly nameMatcher: fm.FlexMatch;
 
-    constructor(readonly name: string) {
+    constructor(readonly name: string,
+        readonly atcRulesEngine: atc.AnchorTextRuleEngine,
+        readonly atcClassifier: atc.AnchorTextClassifier) {
         this.nameMatcher = fm.exactMatch(this.name);
     }
 
@@ -128,7 +130,7 @@ export class TypicalPeriodical implements Periodical {
     classifyAnchorText(anchorText: string): ClassifiedAnchorText {
         const context: atc.AnchorTextClassifierContext = {
             anchorText: anchorText,
-            engine: this.atcRuleEngine,
+            engine: this.atcRulesEngine,
             periodicalName: this.nameMatcher,
         }
         return this.atcClassifier.classify(context);

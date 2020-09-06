@@ -1,4 +1,4 @@
-import * as m from "../flex-match";
+import * as m from "./flex-match";
 import * as atc from "./anchor-text-classifier";
 
 // "side effect" rules find anchor texts that might cause damage like unsubscribing to a email periodical
