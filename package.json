@@ -1,6 +1,6 @@
 {
     "name": "@shah/tsn-periodicals-anchors-classifier",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "description": "Periodicals anchors classifier",
     "main": "dist/periodicals-anchors-classifier.js",
     "types": "dist/periodicals-anchors-classifier.d.ts",

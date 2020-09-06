@@ -461,6 +461,7 @@ export class PersistRelationalCSV {
                     id: periodicalEditionsPK,
                     periodical_id: periodicalsPK,
                     supplier_content_id: pe.supplierContentId,
+                    periodical_name: p.name,
                     from_address: pe.fromAddress,
                     from_name: pe.fromName,
                     date: pe.date.toISOString(),
@@ -477,6 +478,8 @@ export class PersistRelationalCSV {
                         persist: {
                             id: peAnchorsPK,
                             edition_id: periodicalEditionsPK,
+                            periodical_name: p.name,
+                            date: pe.date.toISOString(),
                             classification: ca.classification.classificationID,
                             anchor_text_classified: ca.classifierText,
                             common_anchor: ca.classifiedBy ? (isPeriodicalCommonAnchor(ca.classifiedBy) ? 1 : 0) : 0,
