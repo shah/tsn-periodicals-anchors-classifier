@@ -234,7 +234,7 @@ export class GuessColumnDefn {
     }
 }
 
-export interface TabularWriterOptions<T> {
+export interface TabularWriterOptions {
     readonly destPath: string;
     readonly fileName: string;
     readonly parentUuidNamespace: string;
@@ -253,7 +253,7 @@ export class TabularWriter<T> {
     readonly csvStream: fs.WriteStream;
     protected rowIndex: number = 0;
 
-    constructor({ destPath, fileName, parentUuidNamespace, ppTransform, schema }: TabularWriterOptions<T>) {
+    constructor({ destPath, fileName, parentUuidNamespace, ppTransform, schema }: TabularWriterOptions) {
         this.destPath = destPath;
         this.fileName = fileName;
         this.csvStream = fs.createWriteStream(path.join(destPath, fileName));

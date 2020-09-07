@@ -14,10 +14,10 @@ export function isTextMatcher(o: FlexMatch): o is TextMatcher {
 
 export function matchAny(): FlexMatch {
     return {
-        textMatches: (compare: string): boolean => {
+        textMatches: (): boolean => {
             return true;
         },
-        flexMatches: (compare: FlexMatch): boolean => {
+        flexMatches: (): boolean => {
             return true;
         }
     }

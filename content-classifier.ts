@@ -47,6 +47,6 @@ export interface ContentRuleEngine<T, C> {
 export interface ContentClassifierContext {
 }
 
-export interface ContentClassifier<T, C, U> {
+export interface ContentClassifier<C> {
     classify(ctx: ContentClassifierContext): ClassifiedContent<C> | UnclassifiedContent;
 }

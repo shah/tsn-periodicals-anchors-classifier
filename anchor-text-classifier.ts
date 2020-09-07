@@ -166,7 +166,7 @@ export interface AnchorTextClassifierContext extends cc.ContentClassifierContext
     readonly suggested?: AnchorTextClassificationRule<any>;
 }
 
-export interface AnchorTextClassifier extends cc.ContentClassifier<string, any, any> {
+export interface AnchorTextClassifier extends cc.ContentClassifier<any> {
     classify(ctx: AnchorTextClassifierContext): ClassifiedAnchorText<any> | UnclassifiedAnchorText;
 }
 
